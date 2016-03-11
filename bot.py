@@ -1,7 +1,6 @@
 import tweepy # for tweeting
 import secrets # shhhh
 import random
-import inflect
 import logging
 
 def random_modifier():
@@ -22,8 +21,7 @@ def get_next_chunk():
   text_file.truncate()
   text_file.close()
 
-  p = inflect.engine()
-  return p.plural(chunk)
+  return chunk
 
 def portland_word():
   return random_modifier() + ' ' + get_next_chunk()
