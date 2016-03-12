@@ -2,6 +2,7 @@ import tweepy # for tweeting
 import secrets # shhhh
 import random
 import logging
+import re
 
 def random_modifier():
   # open text file
@@ -23,13 +24,14 @@ def get_next_chunk():
 
   return chunk
 
-def portland_word():
-  return random_modifier() + ' ' + get_next_chunk()
+def best_word():
+  out_string = re.sub("WORD","\"" + get_next_chunk() +"\"",random_modifier())
+  return out_string
 
 def tweet(message):
-  logger = logging.getLogger('everyportland')
+  logger = logging.getLogger('everybestword')
   logger.setLevel(logging.DEBUG)
-  fh = logging.FileHandler('portland_tweets.log')
+  fh = logging.FileHandler('bestword_tweets.log')
   fh.setLevel(logging.DEBUG)
   logger.addHandler(fh)
   logger.debug('getting ready to tweet')
@@ -41,4 +43,4 @@ def tweet(message):
   logger.debug("Posting message {}".format(message))
   api.update_status(status=message)
 
-tweet(portland_word())
+tweet(best_word())
